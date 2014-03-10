@@ -8,6 +8,10 @@ VisualController::VisualController(QWidget *parent) :
     ui(new Ui::VisualController)
 {
     ui->setupUi(this);
+    connect(ui->pushButtonDown, SIGNAL(clicked()), this, SLOT(slotButtonDownClick()));
+    connect(ui->pushButtonUp, SIGNAL(clicked()), this, SLOT(slotButtonUpClick()));
+    connect(ui->pushButtonLeft, SIGNAL(clicked()), this, SLOT(slotButtonLeftClick()));
+    connect(ui->pushButtonRight, SIGNAL(clicked()), this, SLOT(slotButtonRightClick()));
 }
 /*
 ****************************************************************************************************
@@ -55,7 +59,15 @@ void VisualController::keyPressEvent(QKeyEvent *pEvent)
     }
     else if (pEvent->key() == Qt::Key_Down)
     {
-
+        slotButtonDownClick();
+    }
+    else if (pEvent->key() == Qt::Key_Right)
+    {
+        slotButtonRightClick();
+    }
+    else if (pEvent->key() == Qt::Key_Left)
+    {
+        slotButtonLeftClick();
     }
 }
 /*

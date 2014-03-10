@@ -10,6 +10,8 @@ class MainWindow;
 class QItemModel;
 class DataMonitor;
 class DataConverter;
+class VisualController;
+class GLWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -22,6 +24,8 @@ public:
 private:
     DataMonitor *mDataMonitor;
     DataConverter *mDataConverter;
+    VisualController *mVisualController;
+    GLWidget *mGLWidget;
     Ui::MainWindow *ui;
 
     void InitWindow();
