@@ -66,7 +66,6 @@ bool DataMonitor::setData(const QModelIndex &pIndex, const QVariant &pValue, int
     {
         if (pRole == Qt::DisplayRole)
         {
-            emit layoutAboutToBeChanged();
             if (pIndex.column() > mColCount)
             {
                 int lLastCol = mColCount - 1;
@@ -90,7 +89,7 @@ bool DataMonitor::setData(const QModelIndex &pIndex, const QVariant &pValue, int
                 endInsertRows();
             }
             mData[qMakePair(pIndex.row(), pIndex.column())] = pValue;
-            emit layoutChanged();
+            emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
         }
     }
     return rResult;

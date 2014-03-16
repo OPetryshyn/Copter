@@ -19,14 +19,16 @@ SOURCES += main.cpp\
         datamonitor.cpp \
         dataconverter.cpp \
         visualcontroller.cpp \
-        glwidget.cpp
+        glwidget.cpp \
+    motioncontroller.cpp
 
 HEADERS  += mainwindow.h \
         usbmanager.h \
         datamonitor.h \
         dataconverter.h \
         visualcontroller.h \
-        glwidget.h
+        glwidget.h \
+    motioncontroller.h
 
 FORMS    += mainwindow.ui \
         visualcontroller.ui

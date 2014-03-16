@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include <QTimer>
 #include <QVector>
+#include <QDebug>
 
 DataConverter::DataConverter(QObject *parent) :
     QObject(parent),

@@ -56,7 +56,7 @@ QVector<int> USBManager::getDataVector()
         usb_control_msg(mDeviceHandle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0x33,
                         0, 0, lBuffer, n, 100);
 
-        qDebug() << QString().fromLocal8Bit(lBuffer);
+//        qDebug() << QString().fromLocal8Bit(lBuffer);
         for (int i = 35; i < n; i += 2)
         {
             rResult.append((int) (lBuffer[i] | lBuffer[i + 1] << 8));
@@ -101,7 +101,7 @@ void USBManager::slotConnect()
         if (lDeviceHandle)
         {
             mDeviceHandle = lDeviceHandle;
-            delete lDeviceHandle;
+            delete lDeviceBus;
         }
 
         mDeviceState = (mDeviceHandle);

@@ -12,6 +12,7 @@ class DataMonitor;
 class DataConverter;
 class VisualController;
 class GLWidget;
+class MotionController;
 
 class MainWindow : public QMainWindow
 {
@@ -21,11 +22,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void keyPressEvent(QKeyEvent *pEvent);
+
 private:
     DataMonitor *mDataMonitor;
     DataConverter *mDataConverter;
     VisualController *mVisualController;
     GLWidget *mGLWidget;
+    MotionController *mMotionController;
     Ui::MainWindow *ui;
 
     void InitWindow();

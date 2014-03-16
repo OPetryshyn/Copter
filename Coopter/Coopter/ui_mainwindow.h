@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.2.0
+** Created by: Qt User Interface Compiler version 5.2.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -23,6 +23,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <glwidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -35,7 +36,7 @@ public:
     QWidget *page;
     QHBoxLayout *horizontalLayout;
     QTableView *MainTableView;
-    QWidget *page_2;
+    GLWidget *page_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -70,7 +71,7 @@ public:
         horizontalLayout->addWidget(MainTableView);
 
         stackedWidget->addWidget(page);
-        page_2 = new QWidget();
+        page_2 = new GLWidget();
         page_2->setObjectName(QStringLiteral("page_2"));
         stackedWidget->addWidget(page_2);
 
@@ -89,6 +90,9 @@ public:
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
+
+        stackedWidget->setCurrentIndex(0);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi

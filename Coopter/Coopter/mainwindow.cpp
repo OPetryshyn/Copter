@@ -5,13 +5,18 @@
 #include "datamonitor.h"
 #include "visualcontroller.h"
 #include "glwidget.h"
+#include "motioncontroller.h"
+
+#include <QKeyEvent>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     mDataMonitor(NULL),
     mDataConverter(NULL),
-    mVisualController(NULL)
+    mVisualController(NULL),
+    mMotionController(NULL)
 {
     ui->setupUi(this);
 
@@ -29,11 +34,42 @@ MainWindow::~MainWindow()
 //    if (mGLWidget)
 //    {
 //        delete mGLWidget;
-//    }
+    //    }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *pEvent)
+{
+    if (((pEvent->key() == Qt::Key_Left) || (pEvent->key() == Qt::Key_Right)) && pEvent->modifiers() == Qt::SHIFT)
+    {
+        if (pEvent->key() == Qt::Key_Left)
+        {
+            if (ui->stackedWidget->currentIndex() > 0)
+            {
+                ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() - 1);
+            }
+            else
+            {
+                ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
+            }
+        }
+        else
+        {
+            if (ui->stackedWidget->currentIndex() < ui->stackedWidget->count() - 1)
+            {
+                ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
+            }
+            else
+            {
+                ui->stackedWidget->setCurrentIndex(0);
+            }
+        }
+    }
 }
 
 void MainWindow::InitWindow()
 {
+    ui->centralWidget->setFocusPolicy(Qt::NoFocus);
+
     mDataMonitor = new DataMonitor(this);
     ui->MainTableView->setModel(mDataMonitor);
 
@@ -41,7 +77,10 @@ void MainWindow::InitWindow()
     mDataConverter->setModel(mDataMonitor);
 
     mVisualController = new VisualController(NULL);
-//    mGLWidget = new GLWidget(this);
+
+    mMotionController = new MotionController(this);
+    mMotionController->setModel(mDataMonitor);
+    mMotionController->setGLWidget(ui->page_2);
 
     QMenu *lMenu = new QMenu(menuBar());
     lMenu->setTitle("Tools");
