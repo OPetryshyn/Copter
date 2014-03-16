@@ -14,11 +14,16 @@ MotionController::MotionController(QObject *parent) :
     mRotAmplitude(10)
 {
 }
+/*
+****************************************************************************************************
+*/
 QAbstractTableModel *MotionController::getModel() const
 {
     return mModel;
 }
-
+/*
+****************************************************************************************************
+*/
 void MotionController::setModel(QAbstractTableModel *value)
 {
     mModel = value;
@@ -27,7 +32,9 @@ void MotionController::setModel(QAbstractTableModel *value)
         connect(mModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(slotUpdateMovement()));
     }
 }
-
+/*
+****************************************************************************************************
+*/
 void MotionController::slotUpdateMovement()
 {
     if (mModel->hasIndex(0, 1))
@@ -67,14 +74,20 @@ void MotionController::slotUpdateMovement()
         }
     }
 }
+/*
+****************************************************************************************************
+*/
 GLWidget *MotionController::getGLWidget() const
 {
     return mGLWidget;
 }
-
+/*
+****************************************************************************************************
+*/
 void MotionController::setGLWidget(GLWidget *value)
 {
     mGLWidget = value;
 }
-
-
+/*
+****************************************************************************************************
+*/
