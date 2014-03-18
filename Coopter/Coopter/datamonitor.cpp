@@ -6,7 +6,9 @@ DataMonitor::DataMonitor(QObject *parent) :
     mColCount(0)
 {
 }
-
+/*
+****************************************************************************************************
+*/
 QModelIndex DataMonitor::index(int pRow, int pColumn, const QModelIndex &pParent) const
 {
     Q_UNUSED(pParent);
@@ -17,17 +19,17 @@ QModelIndex DataMonitor::index(int pRow, int pColumn, const QModelIndex &pParent
 
     return createIndex(pRow, pColumn);
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 QModelIndex DataMonitor::parent(const QModelIndex &child) const
 {
     Q_UNUSED(child);
     return QModelIndex();
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 QVariant DataMonitor::data(const QModelIndex &index, int role) const
 {
     QVariant rResult;
@@ -40,25 +42,25 @@ QVariant DataMonitor::data(const QModelIndex &index, int role) const
     }
     return rResult;
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 int DataMonitor::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return mRowCount;
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 int DataMonitor::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return mColCount;
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 bool DataMonitor::setData(const QModelIndex &pIndex, const QVariant &pValue, int pRole)
 {
     bool rResult(false);
@@ -94,6 +96,6 @@ bool DataMonitor::setData(const QModelIndex &pIndex, const QVariant &pValue, int
     }
     return rResult;
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/

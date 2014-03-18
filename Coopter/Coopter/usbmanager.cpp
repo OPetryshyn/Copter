@@ -22,30 +22,30 @@ USBManager::USBManager(QObject *parent) :
     mConnectorChecker->setInterval(10000);
     mConnectorChecker->start();
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 USBManager::~USBManager()
 {
     if (mDeviceHandle)
     {
         usb_close(mDeviceHandle);
     }
-    mDeviceHandle = NULL;
-    mUSBDevice = NULL;
     delete mDeviceHandle;
+    mDeviceHandle = NULL;
     delete mUSBDevice;
+    mUSBDevice = NULL;
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 bool USBManager::IsDeviceOpened()
 {
     return mDeviceState;
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 QVector<int> USBManager::getDataVector()
 {
     QVector<int> rResult;
@@ -56,17 +56,18 @@ QVector<int> USBManager::getDataVector()
         usb_control_msg(mDeviceHandle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0x33,
                         0, 0, lBuffer, n, 100);
 
-//        qDebug() << QString().fromLocal8Bit(lBuffer);
+        qDebug() << QString().fromLocal8Bit(lBuffer);
         for (int i = 35; i < n; i += 2)
         {
-            rResult.append((int) (lBuffer[i] | lBuffer[i + 1] << 8));
+            rResult.append((int) ((lBuffer[i] & 0xFF) | ((lBuffer[i + 1] << 0x08) & 0xFF00)));
         }
+        delete [] lBuffer;
     }
     return rResult;
 }
-/**
-********************************************************************************
-**/
+/*
+****************************************************************************************************
+*/
 void USBManager::slotInitUSB()
 {
     usb_init();
@@ -75,7 +76,9 @@ void USBManager::slotInitUSB()
     usb_find_devices();
 
 }
-
+/*
+****************************************************************************************************
+*/
 void USBManager::slotConnect()
 {
     if (!mDeviceState)
@@ -123,7 +126,7 @@ void USBManager::slotDisconnect()
         delete mDeviceHandle;
         mDeviceHandle = NULL;
     }
-    mDeviceState = (mDeviceHandle);
+    mDeviceState = false;
 }
 /*
 ****************************************************************************************************

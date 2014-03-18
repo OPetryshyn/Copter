@@ -102,16 +102,16 @@ void GLWidget::setZRotation(int angle)
 void GLWidget::initializeGL()
 {
     static const GLfloat lightPos[4] = { 5.0f, 5.0f, 10.0f, 1.0f };
-    static const GLfloat reflectance1[4] = { 0.8f, 0.1f, 0.0f, 1.0f };
-    static const GLfloat reflectance2[4] = { 0.0f, 0.8f, 0.2f, 1.0f };
-    static const GLfloat reflectance3[4] = { 0.2f, 0.2f, 1.0f, 1.0f };
+    static const GLfloat reflectance1[4] = { 0.1f, 0.5f, 0.8f, 1.0f };
+//    static const GLfloat reflectance2[4] = { 0.0f, 0.8f, 0.2f, 1.0f };
+//    static const GLfloat reflectance3[4] = { 0.2f, 0.2f, 1.0f, 1.0f };
 
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_DEPTH_TEST);
 
-    gear1 = makeGear(reflectance1, 1.0, 4.0, 1.0, 0.7, 20);
+    gear1 = makeGear(reflectance1, 2.0, 4.0, 1.0, 0.7, 20);
 //    gear2 = makeGear(reflectance2, 0.5, 2.0, 2.0, 0.7, 10);
 //    gear3 = makeGear(reflectance3, 1.3, 2.0, 0.5, 0.7, 10);
 
@@ -128,11 +128,7 @@ void GLWidget::paintGL()
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    drawGear(gear1, 0.0, 0.0, 0.0, /*gear1Rot / 16.0*/ 0);
-//    drawGear(gear2, +3.1, -2.0, 0.0, -2.0 * (gear1Rot / 16.0) - 9.0);
-
-//    glRotated(+90.0, 1.0, 0.0, 0.0);
-//    drawGear(gear3, -3.1, -1.8, -2.2, +2.0 * (gear1Rot / 16.0) - 2.0);
+    drawGear(gear1, 0.0, 0.0, 0.0, 0);
 
     glPopMatrix();
 }
