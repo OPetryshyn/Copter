@@ -31,9 +31,9 @@ USBManager::~USBManager()
     {
         usb_close(mDeviceHandle);
     }
+//    delete mUSBDevice;
     delete mDeviceHandle;
     mDeviceHandle = NULL;
-    delete mUSBDevice;
     mUSBDevice = NULL;
 }
 /*
