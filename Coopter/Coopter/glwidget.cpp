@@ -139,7 +139,6 @@ void GLWidget::paintGL()
 
     glPushMatrix();
 
-    glClearColor();
     glTranslated(-5, -5, -5);
     glRotated(+90.0, 1.0, 0.0, 0.0);
     drawAxis(1.0, 0.0, 0.0);
