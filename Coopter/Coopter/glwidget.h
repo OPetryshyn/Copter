@@ -15,6 +15,7 @@ public:
     int yRotation() const { return yRot; }
     int zRotation() const { return zRot; }
 
+    void drawAxis(double pRedColorDepth, double pGreenColorDepth, double pBlueColorDepth);
 public slots:
     void setXRotation(int angle);
     void setYRotation(int angle);

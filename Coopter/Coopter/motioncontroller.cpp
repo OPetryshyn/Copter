@@ -11,7 +11,8 @@ MotionController::MotionController(QObject *parent) :
     mRotX(0),
     mRotY(0),
     mRotZ(0),
-    mRotAmplitude(514)
+    mRotAmplitude(520),
+    mRotCircle(360 * 16)
 {
 }
 /*
@@ -45,7 +46,7 @@ void MotionController::slotUpdateMovement()
             mRotX = lCurrentX;
             if (mGLWidget)
             {
-                mGLWidget->setXRotation(mRotX * 360 * 16 / mRotAmplitude);
+                mGLWidget->setXRotation(mRotX * mRotCircle / mRotAmplitude);
             }
         }
     }
@@ -57,19 +58,19 @@ void MotionController::slotUpdateMovement()
             mRotY = lCurrentY;
             if (mGLWidget)
             {
-                mGLWidget->setYRotation(mRotY * 360 * 16 / mRotAmplitude);
+                mGLWidget->setYRotation(mRotY * mRotCircle / mRotAmplitude);
             }
         }
     }
-    if (mModel->hasIndex(0, 2))
+    if (mModel->hasIndex(0, 3))
     {
-        int lCurrentZ = mModel->index(0, 2).data().toInt();
+        int lCurrentZ = mModel->index(0, 3).data().toInt();
         if (mRotZ != lCurrentZ)
         {
             mRotZ = lCurrentZ;
             if (mGLWidget)
             {
-                mGLWidget->setZRotation(mRotZ * 360 * 16 / mRotAmplitude);
+                mGLWidget->setZRotation(mRotZ * mRotCircle / mRotAmplitude);
             }
         }
     }
