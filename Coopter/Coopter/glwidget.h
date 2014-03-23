@@ -44,8 +44,6 @@ private:
     void normalizeAngle(int *angle);
 
     GLuint gear1;
-    GLuint gear2;
-    GLuint gear3;
     int xRot;
     int yRot;
     int zRot;

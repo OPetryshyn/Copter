@@ -15,7 +15,7 @@ DataConverter::DataConverter(QObject *parent) :
     mManager = new USBManager(this);
     mDataRefresher = new QTimer(this);
     connect(mDataRefresher, SIGNAL(timeout()), this, SLOT(slotUpdateModel()));
-    mDataRefresher->start(100);
+    mDataRefresher->start(150);
 }
 /**
 ********************************************************************************
@@ -40,16 +40,19 @@ void DataConverter::slotUpdateModel()
     {
         QVector<int> lDataBuffer;
         lDataBuffer = mManager->getDataVector();
-        int j = 0;
-        for (int i = 0; i < lDataBuffer.count(); i+=3)
+        if (!lDataBuffer.isEmpty())
         {
-            mModel->setData(mModel->index(j, 0), QVariant(QString("Item %1").arg(j)), Qt::DisplayRole);
-            mModel->setData(mModel->index(j, 1), lDataBuffer.at(i), Qt::DisplayRole);
-            mModel->setData(mModel->index(j, 2), lDataBuffer.at(i), Qt::DisplayRole);
-            mModel->setData(mModel->index(j, 3), lDataBuffer.at(i), Qt::DisplayRole);
-            j++;
+            int j = 0;
+            for (int i = 0; i <= lDataBuffer.count(); i+=3)
+            {
+                mModel->setData(mModel->index(j, 0), QVariant(QString("Item %1").arg(j)), Qt::DisplayRole);
+                mModel->setData(mModel->index(j, 1), lDataBuffer.at(i), Qt::DisplayRole);
+                mModel->setData(mModel->index(j, 2), lDataBuffer.at(i+1), Qt::DisplayRole);
+                mModel->setData(mModel->index(j, 3), lDataBuffer.at(i+2), Qt::DisplayRole);
+                j++;
+            }
+            lDataBuffer.clear();
         }
-        lDataBuffer.clear();
     }
 }
 /**

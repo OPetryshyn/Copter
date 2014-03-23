@@ -49,8 +49,6 @@ GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
 {
     gear1 = 0;
-    gear2 = 0;
-    gear3 = 0;
     xRot = 0;
     yRot = 0;
     zRot = 0;
@@ -65,8 +63,6 @@ GLWidget::~GLWidget()
 {
     makeCurrent();
     glDeleteLists(gear1, 1);
-    glDeleteLists(gear2, 1);
-    glDeleteLists(gear3, 1);
 }
 
 void GLWidget::setXRotation(int angle)
@@ -103,17 +99,13 @@ void GLWidget::initializeGL()
 {
     static const GLfloat lightPos[4] = { 5.0f, 5.0f, 10.0f, 1.0f };
     static const GLfloat reflectance1[4] = { 0.1f, 0.5f, 0.8f, 1.0f };
-//    static const GLfloat reflectance2[4] = { 0.0f, 0.8f, 0.2f, 1.0f };
-//    static const GLfloat reflectance3[4] = { 0.2f, 0.2f, 1.0f, 1.0f };
 
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_DEPTH_TEST);
 
-    gear1 = makeGear(reflectance1, 2.0, 4.0, 1.0, 0.7, 20);
-//    gear2 = makeGear(reflectance2, 0.5, 2.0, 2.0, 0.7, 10);
-//    gear3 = makeGear(reflectance3, 1.3, 2.0, 0.5, 0.7, 10);
+    gear1 = makeGear(reflectance1, 2.0, 4.0, 1.0, 0.7, 10);
 
     glEnable(GL_NORMALIZE);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -263,7 +255,7 @@ void GLWidget::drawGear(GLuint gear, GLdouble dx, GLdouble dy, GLdouble dz,
 {
     glPushMatrix();
     glTranslated(dx, dy, dz);
-    glRotated(angle, 0.0, 0.0, 1.0);
+    glRotated(angle, 0.0, 0.0, 0.0);
     glCallList(gear);
     glPopMatrix();
 }

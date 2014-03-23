@@ -19,8 +19,8 @@ USBManager::USBManager(QObject *parent) :
     mConnectorChecker = new QTimer(this);
     mConnectorChecker->setTimerType(Qt::PreciseTimer);
     connect(mConnectorChecker, SIGNAL(timeout()), this, SLOT(slotConnect()));
-    mConnectorChecker->setInterval(10000);
-    mConnectorChecker->start();
+    mConnectorChecker->start(10000);
+    slotConnect();
 }
 /*
 ****************************************************************************************************
@@ -32,9 +32,8 @@ USBManager::~USBManager()
         usb_close(mDeviceHandle);
     }
 //    delete mUSBDevice;
-    delete mDeviceHandle;
-    mDeviceHandle = NULL;
-    mUSBDevice = NULL;
+//    delete mDeviceHandle;
+//    mDeviceHandle = NULL;
 }
 /*
 ****************************************************************************************************
@@ -56,11 +55,19 @@ QVector<int> USBManager::getDataVector()
         usb_control_msg(mDeviceHandle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0x33,
                         0, 0, lBuffer, n, 100);
 
-        qDebug() << QString().fromLocal8Bit(lBuffer);
-        for (int i = 35; i < n; i += 2)
-        {
-            rResult.append((int) ((lBuffer[i] & 0xFF) | ((lBuffer[i + 1] << 0x08) & 0xFF00)));
-        }
+//        qDebug() << QString().fromLatin1(lBuffer, n);
+
+        rResult.append(lBuffer[35] | (lBuffer[36] << 8));
+        rResult.append(lBuffer[37] | (lBuffer[38] << 8));
+        rResult.append(lBuffer[39] | (lBuffer[40] << 8));
+
+        rResult.append(lBuffer[41] | (lBuffer[42] << 8));
+        rResult.append(lBuffer[43] | (lBuffer[44] << 8));
+        rResult.append(lBuffer[45] | (lBuffer[46] << 8));
+
+        rResult.append(lBuffer[47] | (lBuffer[48] << 8));
+        rResult.append(lBuffer[49] | (lBuffer[50] << 8));
+        rResult.append(lBuffer[51] | (lBuffer[52] << 8));
         delete [] lBuffer;
     }
     return rResult;
@@ -103,15 +110,24 @@ void USBManager::slotConnect()
         }
         if (lDeviceHandle)
         {
+            delete mDeviceHandle;
             mDeviceHandle = lDeviceHandle;
-            delete lDeviceBus;
         }
 
         mDeviceState = (mDeviceHandle);
     }
     else
     {
-        qDebug() << metaObject()->className() << " device is already opened!";
+            int lResult = usb_claim_interface(mDeviceHandle, usb_device(mDeviceHandle)->config->interface->altsetting->iInterface);
+            if (lResult > 0)
+            {
+                usb_reset(mDeviceHandle);
+                qDebug() << "reset";
+            }
+            else
+            {
+                qDebug() << metaObject()->className() << " device is already opened!";
+            }
     }
     slotDebugLogger();
 }

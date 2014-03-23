@@ -1,9 +1,10 @@
 #include "datamonitor.h"
+#include <QDebug>
 
 DataMonitor::DataMonitor(QObject *parent) :
     QAbstractTableModel(parent),
-    mRowCount(0),
-    mColCount(0)
+    mRowCount(4),
+    mColCount(4)
 {
 }
 /*
@@ -37,7 +38,7 @@ QVariant DataMonitor::data(const QModelIndex &index, int role) const
     {
         if (role == Qt::DisplayRole)
         {
-            rResult = mData.value(qMakePair(index.row(), index.column()));
+            rResult = mData.value(index);
         }
     }
     return rResult;
@@ -68,29 +69,7 @@ bool DataMonitor::setData(const QModelIndex &pIndex, const QVariant &pValue, int
     {
         if (pRole == Qt::DisplayRole)
         {
-            if (pIndex.column() > mColCount)
-            {
-                int lLastCol = mColCount - 1;
-                if(lLastCol < 0)
-                {
-                    lLastCol = 0;
-                }
-                beginInsertColumns(QModelIndex() , lLastCol, pIndex.column());
-                mColCount = pIndex.column() + 1;
-                endInsertColumns();
-            }
-            if (pIndex.row() > mRowCount)
-            {
-                int lLastRow = mRowCount - 1;
-                if(lLastRow < 0)
-                {
-                    lLastRow = 0;
-                }
-                beginInsertRows(QModelIndex(), lLastRow, pIndex.row());
-                mRowCount = pIndex.row() + 1;
-                endInsertRows();
-            }
-            mData[qMakePair(pIndex.row(), pIndex.column())] = pValue;
+            mData[pIndex] = pValue;
             emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
         }
     }

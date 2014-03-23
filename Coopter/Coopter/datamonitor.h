@@ -20,7 +20,7 @@ public:
 private:
     int mRowCount;
     int mColCount;
-    QHash<QPair<int, int>, QVariant> mData;
+    QHash<QModelIndex, QVariant> mData;
 };
 
 #endif // DATAMONITOR_H
