@@ -37,41 +37,12 @@ MainWindow::~MainWindow()
     //    }
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *pEvent)
-{
-    if (((pEvent->key() == Qt::Key_Left) || (pEvent->key() == Qt::Key_Right)) && pEvent->modifiers() == Qt::SHIFT)
-    {
-        if (pEvent->key() == Qt::Key_Left)
-        {
-            if (ui->stackedWidget->currentIndex() > 0)
-            {
-                ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() - 1);
-            }
-            else
-            {
-                ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
-            }
-        }
-        else
-        {
-            if (ui->stackedWidget->currentIndex() < ui->stackedWidget->count() - 1)
-            {
-                ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
-            }
-            else
-            {
-                ui->stackedWidget->setCurrentIndex(0);
-            }
-        }
-    }
-}
-
 void MainWindow::InitWindow()
 {
     ui->centralWidget->setFocusPolicy(Qt::NoFocus);
 
     mDataMonitor = new DataMonitor(this);
-    ui->MainTableView->setModel(mDataMonitor);
+    ui->mDataView->setModel(mDataMonitor);
 
     mDataConverter = new DataConverter(this);
     mDataConverter->setModel(mDataMonitor);
@@ -80,7 +51,7 @@ void MainWindow::InitWindow()
 
     mMotionController = new MotionController(this);
     mMotionController->setModel(mDataMonitor);
-    mMotionController->setGLWidget(ui->page_2);
+    mMotionController->setGLWidget(ui->dockGLWidget->widget());
 
     QMenu *lMenu = new QMenu(menuBar());
     lMenu->setTitle("Tools");

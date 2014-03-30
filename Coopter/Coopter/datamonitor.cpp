@@ -3,7 +3,7 @@
 
 DataMonitor::DataMonitor(QObject *parent) :
     QAbstractTableModel(parent),
-    mRowCount(4),
+    mRowCount(3),
     mColCount(4)
 {
 }

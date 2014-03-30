@@ -13,12 +13,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QDockWidget>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
@@ -32,67 +30,44 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
-    QStackedWidget *stackedWidget;
-    QWidget *page;
-    QHBoxLayout *horizontalLayout;
-    QTableView *MainTableView;
-    GLWidget *page_2;
+    QTableView *mDataView;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
-    QStatusBar *statusBar;
+    QDockWidget *dockGLWidget;
+    GLWidget *mGLWidget;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 300);
+        MainWindow->resize(418, 296);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        stackedWidget = new QStackedWidget(centralWidget);
-        stackedWidget->setObjectName(QStringLiteral("stackedWidget"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(stackedWidget->sizePolicy().hasHeightForWidth());
-        stackedWidget->setSizePolicy(sizePolicy);
-        page = new QWidget();
-        page->setObjectName(QStringLiteral("page"));
-        horizontalLayout = new QHBoxLayout(page);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        MainTableView = new QTableView(page);
-        MainTableView->setObjectName(QStringLiteral("MainTableView"));
+        mDataView = new QTableView(centralWidget);
+        mDataView->setObjectName(QStringLiteral("mDataView"));
 
-        horizontalLayout->addWidget(MainTableView);
-
-        stackedWidget->addWidget(page);
-        page_2 = new GLWidget();
-        page_2->setObjectName(QStringLiteral("page_2"));
-        stackedWidget->addWidget(page_2);
-
-        verticalLayout->addWidget(stackedWidget);
+        verticalLayout->addWidget(mDataView);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 21));
+        menuBar->setGeometry(QRect(0, 0, 418, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
+        dockGLWidget = new QDockWidget(MainWindow);
+        dockGLWidget->setObjectName(QStringLiteral("dockGLWidget"));
+        mGLWidget = new GLWidget();
+        mGLWidget->setObjectName(QStringLiteral("mGLWidget"));
+        dockGLWidget->setWidget(mGLWidget);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(4), dockGLWidget);
 
         retranslateUi(MainWindow);
-
-        stackedWidget->setCurrentIndex(1);
-
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi

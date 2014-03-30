@@ -22,8 +22,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-protected:
-    void keyPressEvent(QKeyEvent *pEvent);
 
 private:
     DataMonitor *mDataMonitor;

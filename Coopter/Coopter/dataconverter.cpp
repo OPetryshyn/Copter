@@ -43,7 +43,7 @@ void DataConverter::slotUpdateModel()
         if (!lDataBuffer.isEmpty())
         {
             int j = 0;
-            for (int i = 0; i <= lDataBuffer.count(); i+=3)
+            for (int i = 0; i < lDataBuffer.count(); i+=3)
             {
                 mModel->setData(mModel->index(j, 0), QVariant(QString("Item %1").arg(j)), Qt::DisplayRole);
                 mModel->setData(mModel->index(j, 1), lDataBuffer.at(i), Qt::DisplayRole);

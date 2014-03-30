@@ -85,9 +85,9 @@ GLWidget *MotionController::getGLWidget() const
 /*
 ****************************************************************************************************
 */
-void MotionController::setGLWidget(GLWidget *value)
+void MotionController::setGLWidget(QWidget *value)
 {
-    mGLWidget = value;
+    mGLWidget = qobject_cast<GLWidget *> (value);
 }
 /*
 ****************************************************************************************************

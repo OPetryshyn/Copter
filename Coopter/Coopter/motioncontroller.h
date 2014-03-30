@@ -16,7 +16,7 @@ public:
     void setModel(QAbstractTableModel *value);
 
     GLWidget *getGLWidget() const;
-    void setGLWidget(GLWidget *value);
+    void setGLWidget(QWidget *value);
 
 signals:
 
