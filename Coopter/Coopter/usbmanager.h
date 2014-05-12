@@ -2,8 +2,11 @@
 #define USBMANAGER_H
 
 #include <QObject>
-#include "libs/lusb0_usb.h"
-
+#if defined(Q_OS_LINUX)
+#include "libs/linux/libusb/usb.h"
+#elif defined(Q_OS_WIN)
+#include "libs/win/lusb0_usb.h"
+#endif
 class QTimer;
 
 class USBManager : public QObject

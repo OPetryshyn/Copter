@@ -105,7 +105,12 @@ void USBManager::slotConnect()
                 {
                     mUSBDevice = lCurrentDevice;
                     lDeviceHandle = usb_open(lCurrentDevice);
+                    qDebug() << "lDeviceHandle: " << lDeviceHandle;
                 }
+//                qDebug() << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+//                qDebug() << "Pid: " << QString("%1").arg(lCurrentDevice->descriptor.idProduct, 0, 16);
+//                qDebug() << "Vid: " << QString("%1").arg(lCurrentDevice->descriptor.idVendor, 0, 16);
+//                qDebug() << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
             }
         }
         if (lDeviceHandle)
@@ -126,7 +131,7 @@ void USBManager::slotConnect()
             }
             else
             {
-                qDebug() << metaObject()->className() << " device is already opened!";
+//                qDebug() << metaObject()->className() << " device is already opened!";
             }
     }
     slotDebugLogger();
@@ -139,8 +144,8 @@ void USBManager::slotDisconnect()
     if (mDeviceHandle)
     {
         usb_close(mDeviceHandle);
-        delete mDeviceHandle;
-        mDeviceHandle = NULL;
+//        delete mDeviceHandle;
+//        mDeviceHandle = NULL;
     }
     mDeviceState = false;
 }
@@ -149,7 +154,7 @@ void USBManager::slotDisconnect()
 */
 void USBManager::slotDebugLogger()
 {
-    qDebug() << "Device state: " << mDeviceState;
+//    qDebug() << "Device state: " << mDeviceState;
 }
 /*
 ****************************************************************************************************

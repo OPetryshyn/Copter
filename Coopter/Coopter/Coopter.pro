@@ -35,7 +35,10 @@ FORMS    += mainwindow.ui \
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libs/ -llibusb
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libs/ -llibusb
-else:unix: LIBS += -L$$PWD/libs/ -llibusb
+#else:unix: LIBS += -L$$PWD/libs/linux/ -lusb
+#else:unix: LIBS += -L/usr/local/lib64 -lusb
+else:unix: LIBS += -L/usr/local/lib/ -lusb
+
 
 INCLUDEPATH += $$PWD/libs
 DEPENDPATH += $$PWD/libs

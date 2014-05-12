@@ -2,13 +2,8 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>418</width>
-    <height>296</height>
-   </rect>
+  <property name="enabled">
+   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -25,8 +20,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>418</width>
-     <height>21</height>
+     <width>475</width>
+     <height>19</height>
     </rect>
    </property>
   </widget>
@@ -39,8 +34,14 @@
    </attribute>
   </widget>
   <widget class="QDockWidget" name="dockGLWidget">
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>100</height>
+    </size>
+   </property>
    <attribute name="dockWidgetArea">
-    <number>4</number>
+    <number>2</number>
    </attribute>
    <widget class="GLWidget" name="mGLWidget"/>
   </widget>
