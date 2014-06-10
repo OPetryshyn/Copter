@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFile>
 
 namespace Ui {
 class MainWindow;
@@ -13,6 +14,9 @@ class DataConverter;
 class VisualController;
 class GLWidget;
 class MotionController;
+class USBManager;
+
+class Wizard;
 
 class MainWindow : public QMainWindow
 {
@@ -22,8 +26,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void connectTracking(bool pState);
+    void trackAllData(QVector<int> pVector);
+    void slotAdjustFilter();
 
 private:
+    Wizard *mFilterWizard;
+    QFile mLogFile;
+    USBManager *mUSBManager;
     DataMonitor *mDataMonitor;
     DataConverter *mDataConverter;
     VisualController *mVisualController;

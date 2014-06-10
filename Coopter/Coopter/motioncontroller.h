@@ -31,7 +31,7 @@ private:
     int mRotY;
     int mRotZ;
     int mRotAmplitude;
-    int mRotCircle;
+    double mRotCircle;
 
 };
 

@@ -3,6 +3,7 @@
 #include <QAbstractTableModel>
 #include "glwidget.h"
 
+#include <qmath.h>
 #include <QDebug>
 
 MotionController::MotionController(QObject *parent) :
@@ -11,20 +12,20 @@ MotionController::MotionController(QObject *parent) :
     mRotX(0),
     mRotY(0),
     mRotZ(0),
-    mRotAmplitude(520),
-    mRotCircle(360 * 16)
+    mRotAmplitude(16),
+    mRotCircle(180.0 / M_PI)
 {
 }
-/*
-****************************************************************************************************
-*/
+/**
+********************************************************************************
+**/
 QAbstractTableModel *MotionController::getModel() const
 {
     return mModel;
 }
-/*
-****************************************************************************************************
-*/
+/**
+********************************************************************************
+**/
 void MotionController::setModel(QAbstractTableModel *value)
 {
     mModel = value;
@@ -33,62 +34,86 @@ void MotionController::setModel(QAbstractTableModel *value)
         connect(mModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(slotUpdateMovement()));
     }
 }
-/*
-****************************************************************************************************
-*/
+/**
+********************************************************************************
+**/
 void MotionController::slotUpdateMovement()
 {
-    if (mModel->hasIndex(0, 1))
+    if (mGLWidget /*&& mModel*/)
     {
-        int lCurrentX = mModel->index(0, 1).data().toInt();
-        if (mRotX != lCurrentX)
+        if (mModel->hasIndex(0, 1))
         {
-            mRotX = lCurrentX;
-            if (mGLWidget)
+            int lCurrentX = mModel->index(0, 1).data().toInt();
+            if (mRotX != lCurrentX)
             {
-                mGLWidget->setXRotation(mRotX * mRotCircle / mRotAmplitude);
+                mRotX = lCurrentX;
+                lCurrentX -= 5;
+                if (qAbs(lCurrentX) < 510.0)
+                {
+                    double lAngle = asin(lCurrentX / 510.0) * mRotCircle;
+//                    qDebug() << "X: " << lCurrentX;
+                    mGLWidget->setXRotation(lAngle * mRotAmplitude);
+                }
+                else
+                {
+//                    qDebug() << "error: X " << mRotX;
+                }
             }
         }
-    }
-    if (mModel->hasIndex(0, 2))
-    {
-        int lCurrentY = mModel->index(0, 2).data().toInt();
-        if (mRotY != lCurrentY)
+        if (mModel->hasIndex(0, 2))
         {
-            mRotY = lCurrentY;
-            if (mGLWidget)
+            int lCurrentY = mModel->index(0, 2).data().toInt();
+            if (mRotY != lCurrentY)
             {
-                mGLWidget->setYRotation(mRotY * mRotCircle / mRotAmplitude);
+                mRotY = lCurrentY;
+                lCurrentY -= 12;
+                if (qAbs(lCurrentY) < 508.0)
+                {
+                    double lAngle = asin(lCurrentY / 508.0) * mRotCircle;
+//                qDebug() << "Y: " << lCurrentY;
+                    mGLWidget->setYRotation(lAngle * mRotAmplitude);
+                }
+                else
+                {
+//                    qDebug() << "error: Y " << mRotY;
+                }
             }
         }
-    }
-    if (mModel->hasIndex(0, 3))
-    {
-        int lCurrentZ = mModel->index(0, 3).data().toInt();
-        if (mRotZ != lCurrentZ)
+        if (mModel->hasIndex(0, 3))
         {
-            mRotZ = lCurrentZ;
-            if (mGLWidget)
+            int lCurrentZ = mModel->index(0, 3).data().toInt();
+            if (mRotZ != lCurrentZ)
             {
-                mGLWidget->setZRotation(mRotZ * mRotCircle / mRotAmplitude);
+                mRotZ = lCurrentZ;
+                lCurrentZ -= 40;
+                if (qAbs(lCurrentZ) < 515.0)
+                {
+                    double lAngle = asin((lCurrentZ) / 515.0) * mRotCircle;
+//                qDebug() << "Z: " << lAngle;
+                    mGLWidget->setZRotation(lAngle * mRotAmplitude);
+                }
+                else
+                {
+//                    qDebug() << "error: Z " << lCurrentZ;
+                }
             }
         }
     }
 }
-/*
-****************************************************************************************************
-*/
+/**
+********************************************************************************
+**/
 GLWidget *MotionController::getGLWidget() const
 {
     return mGLWidget;
 }
-/*
-****************************************************************************************************
-*/
+/**
+********************************************************************************
+**/
 void MotionController::setGLWidget(QWidget *value)
 {
     mGLWidget = qobject_cast<GLWidget *> (value);
 }
-/*
-****************************************************************************************************
-*/
+/**
+********************************************************************************
+**/

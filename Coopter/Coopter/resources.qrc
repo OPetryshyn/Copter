@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/tool_btn">
+        <file alias="set_gnd">Resources/Set_GND.png</file>
+    </qresource>
+</RCC>

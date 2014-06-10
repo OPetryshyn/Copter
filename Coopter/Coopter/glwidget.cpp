@@ -101,23 +101,24 @@ void GLWidget::initializeGL()
     static const GLfloat reflectance1[4] = { 0.1f, 0.5f, 0.8f, 1.0f };
 
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+//    glEnable(GL_LIGHTING);
+//    glEnable(GL_LIGHT0);
     glEnable(GL_DEPTH_TEST);
 
     gear1 = makeGear(reflectance1, 1.0, 4.0, 0.5, 1.5, 20);
 
     glEnable(GL_NORMALIZE);
-    glClearColor(0.1f, 0.24f, 0.3f, 1.0f);
+    glClearColor(0.8f, 0.85f, 0.8f, 0.01f);
 }
 
 void GLWidget::drawAxis(double pRedColorDepth, double pGreenColorDepth, double pBlueColorDepth)
 {
     glLineWidth(3.0);
     glBegin(GL_LINES);
-    glColor3f(pRedColorDepth, pGreenColorDepth, pBlueColorDepth);
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(5, 0, 0);
+        glColor3f(0.4f, 0.4f, 0.4f);
+        glVertex3f(0.0, 0.0, 0.0);
+        glColor3f(pRedColorDepth, pGreenColorDepth, pBlueColorDepth);
+        glVertex3f(5, 0, 0);
     glEnd();
 }
 
@@ -130,25 +131,28 @@ void GLWidget::paintGL()
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
     glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    glRotated(+90.0, 1.0, 0.0, 0.0);
+    glRotated(+90.0, 0.5f, 0.0f, 0.0f);
     drawGear(gear1, 0.0, 0.0, 0.0, 0);
 //    drawGear(gear1, xRot / 16.0, yRot / 16.0, zRot / 16.0, 90*16);
 
     glLoadIdentity();
     glPopMatrix();
 
-    glPushMatrix();
+    glFlush();
+    glClear(GL_COLOR_BUFFER_BIT | GL_LIGHTING_BIT);
 
+    glPushMatrix();
     glTranslated(-5, -5, -5);
     glRotated(+90.0, 1.0, 0.0, 0.0);
-    drawAxis(1.0, 0.0, 0.0);
+    drawAxis(1.0f, 0.5f, 0.5f);
 
     glRotated(+90.0, 0.0, 1.0, 0.0);
-    drawAxis(0.0, 1.0, 0.0);
+    drawAxis(0.5f, 1.0f, 0.5f);
 
     glRotated(+90.0, 0.0, 0.0, 1.0);
-    drawAxis(0.0, 0.0, 1.0);
+    drawAxis(0.5f, 0.5f, 1.0f);
 
+    glLoadIdentity();
     glPopMatrix();
 }
 
